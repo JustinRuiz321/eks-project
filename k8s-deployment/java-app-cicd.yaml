@@ -3,22 +3,22 @@ kind: Deployment
 metadata:
   name: java-app-deployment
   labels:
-    app: java-app
+    app: $APP_NAME
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: java-app
+      app: $APP_NAME
   template:
     metadata:
       labels:
-        app: java-app
+        app: $APP_NAME
     spec:
       imagePullSecrets:
       - name: my-registry-key
       containers:
       - name: javamysqlapp
-        image: jruiz321/bootcamp-training:1.5.0-18
+        image: "${IMAGE_REPO}:${IMAGE_NAME}"
         ports:
         - containerPort: 8080
         env:
@@ -49,7 +49,7 @@ metadata:
   name: java-app-service
 spec:
   selector:
-    app: java-app
+    app: $APP_NAME
   ports:
   - protocol: TCP
     port: 8080
